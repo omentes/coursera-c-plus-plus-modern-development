@@ -13,7 +13,7 @@
 
 using namespace std;
 
-int main_02() {
+int main_12() {
 	string a, b ,c;
 	vector<string> v;
 	cin >> a >> b >> c;

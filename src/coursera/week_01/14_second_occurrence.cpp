@@ -8,7 +8,7 @@
 #include <iostream>
 using namespace std;
 
-int main_04() {
+int main_14() {
 	string in;
 	int result;
 	cin >> in;

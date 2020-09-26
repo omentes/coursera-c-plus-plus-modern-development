@@ -8,7 +8,7 @@
 #include <iostream>
 using namespace std;
 
-int main_01() {
+int main_11() {
 	int a, b;
 	cin >> a >> b;
 	if (cin.fail()) {
