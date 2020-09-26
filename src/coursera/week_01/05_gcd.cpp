@@ -8,6 +8,9 @@
 #include <iostream>
 using namespace std;
 
+/*
+ * Recursive Euclidean algo
+ */
 int gcd(int a, int b) {
 	int tmp = a;
 
@@ -21,7 +24,7 @@ int gcd(int a, int b) {
     return gcd(a, b - a);
 }
 
-int main() {
+int main_05() {
 	int a, b;
 	cin >> a >> b;
 	if (cin.fail()) {
