@@ -15,13 +15,12 @@
 using namespace std;
 
 int main_13() {
-	int a, b ,c;
-	double descriminant, scrt_result;
+	double dnt, scrt_result, a, b ,c;
 	vector<double> result;
 	cin >> a >> b >> c;
-	descriminant = (b * b) - 4 * a * c;
-	scrt_result = sqrt(descriminant);
-	if (descriminant < 0.0) {
+	dnt = (b * b) - 4 * a * c;
+	scrt_result = sqrt(dnt);
+	if (dnt < 0.0) {
 		return 0;
 	}
 	if (0 == a) {
@@ -30,10 +29,10 @@ int main_13() {
 		result.push_back((double)(scrt_result / (2 * a)));
 	}
 	else {
-		if (descriminant >= 0) {
+		if (dnt >= 0) {
 			result.push_back((-b + scrt_result) / (2 * a));
-			if (descriminant != 0) {
-				result.push_back((-b - scrt_result) / (2 * a));
+			if (dnt != 0) {
+				result.push_back((-b + scrt_result) / (2 * a));
 			}
 		} else {
 			result.push_back(-b / 2 * a);
@@ -42,7 +41,7 @@ int main_13() {
 
 
 	if (!result.empty()) {
-		for (auto i : result) {
+		for (double i : result) {
 			cout <<	i << ' ' ;
 		}
 	}

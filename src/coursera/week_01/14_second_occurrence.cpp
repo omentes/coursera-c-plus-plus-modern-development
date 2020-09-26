@@ -10,14 +10,15 @@ using namespace std;
 
 int main_14() {
 	string in;
-	int result;
+	int result, len;
 	cin >> in;
 	if (cin.fail()) {
 	    cout << "Please use string";
 	    return 1;
 	}
 	result = -2;
-	for (int i = 0; i < in.length(); ++i) {
+	len = (int)in.length();
+	for (int i = 0; i < len; ++i) {
 		if ('f' == in[i] && -2 == result) {
 			result++;
 		} else if ('f' == in[i] && -1 == result) {
