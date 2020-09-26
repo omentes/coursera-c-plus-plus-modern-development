@@ -8,7 +8,7 @@
 #include <iostream>
 using namespace std;
 
-int main() {
+int main_04() {
 	string in;
 	int result;
 	cin >> in;
@@ -22,6 +22,7 @@ int main() {
 			result++;
 		} else if ('f' == in[i] && -1 == result) {
 			result = i;
+			break ;
 		}
 	}
 	cout << result;
