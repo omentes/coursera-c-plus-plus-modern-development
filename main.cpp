@@ -1,26 +1,27 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
 #include <string>
 
 using namespace std;
 
-void MoveStrings(vector<string>& source, vector<string>& destination) {
-    for (auto str : source) {
-        destination.push_back(str);
+vector<int> Reversed(const vector<int>& v) {
+    int len = v.size() - 1;
+    vector<int> v2 = {};
+    if (len > 0) {
+        while ( len > -1)
+        {
+            v2.push_back(v[len--]);
+        }
     }
-    source.clear();
+    return v2;
 }
 
 int main() {
-    vector<string> source = {"a", "b", "c"};
-    vector<string> destination = {"z"};
-    MoveStrings(source, destination);
-    for (auto w : destination) {
-        cout << w << endl;
-    }
-    for (auto d : source) {
-        cout << d << endl;
+    vector<int> numbers = {1, 5, 3, 4, 2};
+    numbers = Reversed(numbers);
+// numbers должен оказаться равен {2, 4, 3, 5, 1}
+    for (auto d : numbers) {
+        cout << d << ' ';
     }
     return 0;
 }
