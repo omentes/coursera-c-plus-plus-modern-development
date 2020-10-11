@@ -10,7 +10,7 @@
 #include <vector>
 using namespace std;
 
-int main_16() {
+int main() {
 	int a;
 	vector<int> v;
 	cin >> a ;
