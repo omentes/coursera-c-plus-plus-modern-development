@@ -1,6 +1,3 @@
-//
-// Created by omentes on 11.10.20.
-//
 
 vector<string> PalindromFilter(vector<string> words, int minLength) {
     vector<string> result = {};

@@ -1,6 +1,4 @@
-//
-// Created by omentes on 11.10.20.
-//
+
 vector<int> Reversed(const vector<int>& v) {
     int len = v.size() - 1;
     vector<int> v2 = {};

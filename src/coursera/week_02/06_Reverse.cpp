@@ -1,6 +1,5 @@
-//
-// Created by omentes on 11.10.20.
-//
+
+
 void Reverse(vector<int>& v) {
     int tmp;
     int len = v.size() - 1;

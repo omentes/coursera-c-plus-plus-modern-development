@@ -1,6 +1,3 @@
-//
-// Created by omentes on 11.10.20.
-//
 
 int	Factorial(int number)
 {
