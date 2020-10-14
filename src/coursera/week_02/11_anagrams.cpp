@@ -9,7 +9,6 @@ map<char, int> charMapByWord(const string& str)
     for (const char& c : str) {
         m[c]++;
     }
-
     return m;
 }
 
