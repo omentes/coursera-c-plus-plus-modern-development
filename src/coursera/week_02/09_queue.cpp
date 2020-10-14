@@ -23,7 +23,6 @@ int main() {
             i = count(people.begin(), people.end(), true);
             cout << i << endl;
         }
-
     }
 
     return 0;
