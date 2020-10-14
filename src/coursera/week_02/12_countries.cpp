@@ -8,7 +8,7 @@ void changeCapital(
         map<string, string>& countries,
         const string& country,
         const string& capital
-    ) {
+) {
 
     if (capital == countries[country]) {
         cout << "Country "<< country << " hasn't changed its capital" << endl;
@@ -33,7 +33,7 @@ void renameCountry(
     if (!countries[new_country_name].empty() ||
         old_country_name == new_country_name ||
         countries[old_country_name].empty()
-        ) {
+            ) {
         cout << "Incorrect rename, skip" << endl;
         if (countries[old_country_name].empty()) {
             countries.erase(old_country_name);
@@ -81,8 +81,8 @@ int main() {
         if (command == "CHANGE_CAPITAL" || command == "RENAME") {
             cin >> first >> second;
             command == "CHANGE_CAPITAL" ?
-                changeCapital(countries, first, second) :
-                renameCountry(countries, first, second);
+            changeCapital(countries, first, second) :
+            renameCountry(countries, first, second);
         } else if (command == "ABOUT") {
             cin >> first;
             aboutCountry(countries, first);
