@@ -6,7 +6,6 @@ using namespace std;
 
 
 int main() {
-
     int days, temp, avg;
     vector<int> temperature, v = {};
     vector<int> result = {};

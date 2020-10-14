@@ -1,11 +1,5 @@
-/*
- * 04_second_occurrence.cpp
- *
- *  Created on: 4:08:20 PM Sep 26, 2020
- *      Author: omentes
- */
-
 #include <iostream>
+
 using namespace std;
 
 int main() {

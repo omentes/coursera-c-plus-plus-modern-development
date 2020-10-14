@@ -1,15 +1,8 @@
-/*
- * 17_devision.cpp
- *
- *  Created on: 9:49:15 PM Sep 26, 2020
- *      Author: omentes
- */
-
 #include <iostream>
 
 using namespace std;
 
-int main_17() {
+int main() {
 	int a, b;
 	cin >> a >> b;
 	if (cin.fail()) {

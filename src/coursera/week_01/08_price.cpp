@@ -1,10 +1,3 @@
-/*
- * 18_price.cpp
- *
- *  Created on: 10:27:55 PM Sep 26, 2020
- *      Author: omentes
- */
-
 #include <iostream>
 
 using namespace std;

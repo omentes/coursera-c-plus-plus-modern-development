@@ -1,10 +1,3 @@
-/*
- * 02_minimal_string.cpp
- *
- *  Created on: 1:17:47 PM Sep 26, 2020
- *      Author: omentes
- */
-
 #include <algorithm>
 #include <iostream>
 #include <map>
@@ -13,7 +6,7 @@
 
 using namespace std;
 
-int main_12() {
+int main() {
 	string a, b ,c;
 	vector<string> v;
 	cin >> a >> b >> c;

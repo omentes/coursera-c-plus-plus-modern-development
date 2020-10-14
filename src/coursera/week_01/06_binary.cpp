@@ -1,13 +1,7 @@
-/*
- * 05_gcd.cpp
- *
- *  Created on: 4:42:22 PM Sep 26, 2020
- *      Author: omentes
- */
-
 #include <algorithm>
 #include <iostream>
 #include <vector>
+
 using namespace std;
 
 int main() {
