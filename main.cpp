@@ -1,41 +1,28 @@
 #include <iostream>
-#include <string>
-#include <vector>
 #include <map>
-#include <set>
+#include <string>
 
 using namespace std;
 
+
 int main() {
-    bool flag = false;
-    int lines, stops, it = 1;
-    string stop, bus;
-    map <int, set<string>> exists;
-    set<string> exist;
+  Person person;
 
-    bus = "New bus ";
-    cin >> lines;
-    while (lines--) {
-        cin >> stops;
-        exist.clear();
-        while (stops--) {
-            cin >> stop;
-            exist.insert(stop);
-        }
-        for (const auto& [name, item] : exists) {
-            if (item == exist) {
-                flag = true;
-                cout << "Already exists for " << name << endl;
-                break ;
-            }
-        }
-        if (!flag) {
-            exists[it] = exist;
-            cout << "New bus " << it++ << endl;
-        }
-        flag = false;
-    }
+  person.ChangeFirstName(1965, "Polina");
+  person.ChangeLastName(1967, "Sergeeva");
+  for (int year : {1900, 1965, 1990}) {
+    cout << person.GetFullName(year) << endl;
+  }
 
+  person.ChangeFirstName(1970, "Appolinaria");
+  for (int year : {1969, 1970}) {
+    cout << person.GetFullName(year) << endl;
+  }
 
-    return 0;
+  person.ChangeLastName(1968, "Volkova");
+  for (int year : {1969, 1970}) {
+    cout << person.GetFullName(year) << endl;
+  }
+
+  return 0;
 }
