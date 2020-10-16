@@ -1,10 +1,7 @@
-#include <iostream>
 #include <map>
 #include <string>
 #include <vector>
 #include <algorithm>
-
-using namespace std;
 
 class Person {
  public:
@@ -97,21 +94,3 @@ class Person {
     return result;
   }
 };
-
-int main() {
-
-  Person person;
-
-
-  person.ChangeFirstName(1, "1_first");
-  person.ChangeLastName(1, "1_last");
-  person.ChangeFirstName(3, "3_first");
-  person.ChangeLastName(5, "5_last");
-  person.ChangeFirstName(4, "4_first");
-  person.ChangeLastName(6, "6_last");
-
-  cout << person.GetFullName(7) << endl;
-  cout << person.GetFullNameWithHistory(7) << endl;
-
-  return 0;
-}
