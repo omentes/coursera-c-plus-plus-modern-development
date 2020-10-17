@@ -1,9 +1,5 @@
 #include <iostream>
 #include <numeric>
-#include <sstream>
-#include <set>
-#include <map>
-
 using namespace std;
 
 class Rational {
@@ -14,9 +10,6 @@ class Rational {
   }
 
   Rational(int numerator, int denominator) {
-    UpdateNums(numerator, denominator);
-  }
-  void UpdateNums(int numerator, int denominator) {
     int div = gcd(numerator, denominator);
     a = numerator/div;
     b = denominator/div;
@@ -47,16 +40,6 @@ bool operator==(const Rational& left, const Rational& right) {
   return left.Numerator() == right.Numerator() && left.Denominator() == right.Denominator();
 }
 
-bool operator<(const Rational& left, const Rational& right) {
-  if (left.Denominator() == right.Denominator()) {
-    return left.Numerator() < right.Numerator();
-  } else {
-    int lcm_value = lcm(left.Denominator(), right.Denominator());
-    int new_left = (lcm_value/left.Denominator()) * left.Numerator();
-    int new_right = (lcm_value/right.Denominator()) * right.Numerator();
-    return new_left < new_right;
-  }
-}
 Rational operator+(const Rational& left, const Rational& right) {
   if (left.Denominator() == right.Denominator()) {
     return Rational(left.Numerator() + right.Numerator(), right.Denominator());
@@ -83,44 +66,39 @@ Rational operator*(const Rational& left, const Rational& right) {
   return Rational(
       left.Numerator() * right.Numerator(),
       left.Denominator() * right.Denominator()
-      );
+  );
 }
 
 Rational operator/(const Rational& left, const Rational& right) {
   return Rational(
       left.Numerator() * right.Denominator(),
       left.Denominator() * right.Numerator()
-      );
-}
-
-ostream& operator<<(ostream& stream, const Rational& rational) {
-  stream << rational.Numerator() << "/" << rational.Denominator();
-  return stream;
-}
-
-istream& operator>>(istream& stream, Rational& rational) {
-  int a, b;
-  char c;
-  stream >> a;
-  stream >> c;
-  stream >> b;
-  if (stream.fail() || c != '/') {
-    return stream;
-  }
-  rational.UpdateNums(a, b);
-  return stream;
+  );
 }
 
 int main() {
-  set<Rational> rationals;
-  rationals.insert(Rational(1, 2));
-  rationals.insert(Rational(1, 3));
-  for (const auto& i : rationals) {
-    cout << i << endl;
+  {
+    Rational a(2, 3);
+    Rational b(4, 3);
+    Rational c = a * b;
+    bool equal = c == Rational(8, 9);
+    if (!equal) {
+      cout << "2/3 * 4/3 != 8/9" << endl;
+      return 1;
+    }
   }
-  map<Rational, string> name;
-  name[Rational(1, 2)] = "одна вторая";
-  cout << name[Rational(1, 2)] << endl;
+
+  {
+    Rational a(5, 4);
+    Rational b(15, 8);
+    Rational c = a / b;
+    bool equal = c == Rational(2, 3);
+    if (!equal) {
+      cout << "5/4 / 15/8 != 2/3" << endl;
+      return 2;
+    }
+  }
+
   cout << "OK" << endl;
   return 0;
 }

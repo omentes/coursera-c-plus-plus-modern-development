@@ -83,14 +83,14 @@ Rational operator*(const Rational& left, const Rational& right) {
   return Rational(
       left.Numerator() * right.Numerator(),
       left.Denominator() * right.Denominator()
-      );
+  );
 }
 
 Rational operator/(const Rational& left, const Rational& right) {
   return Rational(
       left.Numerator() * right.Denominator(),
       left.Denominator() * right.Numerator()
-      );
+  );
 }
 
 ostream& operator<<(ostream& stream, const Rational& rational) {
