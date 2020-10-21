@@ -1,18 +1,8 @@
 #include <iostream>
 #include <map>
-#include <vector>
 
 using namespace std;
 
-enum class TaskStatus {
-  NEW,
-  IN_PROGRESS,
-  TESTING,
-  DONE
-};
-
-
-using TasksInfo = map<TaskStatus, int>;
 
 class TeamTasks {
  public:
@@ -87,79 +77,3 @@ class TeamTasks {
  private:
   map<string, map<TaskStatus, int>> person_to_tasks;
 };
-
-// Принимаем словарь по значению, чтобы иметь возможность
-// обращаться к отсутствующим ключам с помощью [] и получать 0,
-// не меняя при этом исходный словарь
-void PrintTasksInfo(TasksInfo tasks_info) {
-  cout << tasks_info[TaskStatus::NEW] << " new tasks" <<
-       ", " << tasks_info[TaskStatus::IN_PROGRESS] << " tasks in progress" <<
-       ", " << tasks_info[TaskStatus::TESTING] << " tasks are being tested" <<
-       ", " << tasks_info[TaskStatus::DONE] << " tasks are done" << endl;
-}
-
-int main() {
-  TeamTasks tasks;
-  for (int i = 0; i < 5; ++i) {
-    tasks.AddNewTask("Ivan");
-  }
-
-  cout << "Ivan's tasks: ";
-  PrintTasksInfo(tasks.GetPersonTasksInfo("Ivan"));
-
-  TasksInfo updated_tasks, untouched_tasks;
-
-  tie(updated_tasks, untouched_tasks) =
-      tasks.PerformPersonTasks("Ivan", 5);
-  cout << "\n";
-  cout << "Updated Ivan's tasks: ";
-  PrintTasksInfo(updated_tasks);
-  cout << "\n";
-  cout << "Untouched Ivan's tasks: ";
-  PrintTasksInfo(untouched_tasks);
-  cout << "\n";
-
-  tie(updated_tasks, untouched_tasks) =
-      tasks.PerformPersonTasks("Ivan", 5);
-  cout << "Updated Ivan's tasks: ";
-  PrintTasksInfo(updated_tasks);
-  cout << "\n";
-  cout << "Untouched Ivan's tasks: ";
-  PrintTasksInfo(untouched_tasks);
-  cout << "\n";
-
-  tie(updated_tasks, untouched_tasks) =
-      tasks.PerformPersonTasks("Ivan", 1);
-  cout << "Updated Ivan's tasks: ";
-  PrintTasksInfo(updated_tasks);
-  cout << "\n";
-  cout << "Untouched Ivan's tasks: ";
-  PrintTasksInfo(untouched_tasks);
-  cout << "\n";
-
-  for (int i = 0; i < 5; ++i) {
-    tasks.AddNewTask("Ivan");
-  }
-  tie(updated_tasks, untouched_tasks) =
-      tasks.PerformPersonTasks("Ivan", 2);
-  cout << "Updated Ivan's tasks: ";
-  PrintTasksInfo(updated_tasks);
-  cout << "\n";
-  cout << "Untouched Ivan's tasks: ";
-  PrintTasksInfo(untouched_tasks);
-  cout << "\n";
-  PrintTasksInfo(tasks.GetPersonTasksInfo("Ivan"));
-
-    tie(updated_tasks, untouched_tasks) =
-      tasks.PerformPersonTasks("Ivan", 4);
-  cout << "Updated Ivan's tasks: ";
-  PrintTasksInfo(updated_tasks);
-  cout << "\n";
-  cout << "Untouched Ivan's tasks: ";
-  PrintTasksInfo(untouched_tasks);
-  cout << "\n";
-  PrintTasksInfo(tasks.GetPersonTasksInfo("Ivan"));
-
-
-  return 0;
-}
