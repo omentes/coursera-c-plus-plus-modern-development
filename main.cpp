@@ -9,26 +9,40 @@ using namespace std;
 
 class Solution {
  public:
-  int reverse(int x) {
-    long l = static_cast<long>(x);
-    long result = 0;
-    if (l >= INT32_MAX) {
-      return 0;
+  int myAtoi(string s) {
+    char check;
+    unsigned long long n = 0;
+    int i = 0;
+
+    while (s[i]) {
+      if ((s[i] < 14 && s[i] > 8) || s[i] == 32) {
+        ++i;
+        continue;
+      } else {
+        break ;
+      }
     }
-    while (x) {
-      result *= static_cast<long>(10);
-      result += static_cast<long>(x % 10);
-      x /= static_cast<long>(10);
+    check = '+';
+    if (s[i] == '-' || s[i] == '+')
+    {
+      check = s[i];
+      i++;
     }
-    if (result > 2147483646 || result < -2147483647) {
-      return 0;
+    while ((s[i] >= '0') && (s[i] <= '9'))
+    {
+      n = n * 10 + (s[i] - '0');
+      i++;
+      if (n >= 2147483648) {
+        n = check == '-' ? -2147483648 : 2147483647;
+        return n;
+      }
     }
-    return static_cast<int>(result);
+    return check == '-' ? -n : n;
   }
 };
 int main() {
   Solution sol;
-  cout << sol.reverse(-2147483648) << endl;
+  cout << sol.myAtoi("18446744073709551617") << endl;
 //  cout << sol.reverse(214347865) << endl;
   return 0;
 }
