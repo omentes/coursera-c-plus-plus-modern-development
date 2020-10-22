@@ -27,14 +27,19 @@
 class Solution {
  public:
   int reverse(int x) {
-    long long result = 0;
-    bool negative = (x < 0) ? true : false;
-    x = (x < 0) ? x * -1 : x;
-    while (x) {
-      result *= 10;
-      result += x % 10;
-      x /= 10;
+    long l = static_cast<long>(x);
+    long result = 0;
+    if (l > 2147483646 || l < -2147483647) {
+      return 0;
     }
-    return negative == true ? result * -1 : result;
+    while (x) {
+      result *= static_cast<long>(10);
+      result += static_cast<long>(x % 10);
+      x /= static_cast<long>(10);
+    }
+    if (result > 2147483646 || result < -2147483647) {
+      return 0;
+    }
+    return static_cast<int>(result);
   }
 };
