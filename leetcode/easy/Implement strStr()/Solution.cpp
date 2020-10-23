@@ -24,6 +24,7 @@
     Constraints:
     0 <= haystack.length, needle.length <= 5 * 104
     haystack and needle consist of only lower-case English characters.
+    https://leetcode.com/problems/implement-strstr
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 class Solution {

@@ -47,6 +47,7 @@
     Constraints:
     0 <= s.length <= 200
     s consists of English letters (lower-case and upper-case), digits, ' ', '+', '-' and '.'.
+    https://leetcode.com/problems/string-to-integer-atoi
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 class Solution {
