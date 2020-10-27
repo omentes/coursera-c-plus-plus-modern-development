@@ -92,11 +92,13 @@ ostream& operator << (ostream& os, const StopsForBusResponse& r) {
 }
 
 struct AllBusesResponse {
-  // Наполните полями эту структуру
+  vector<string> res = {};
 };
 
 ostream& operator << (ostream& os, const AllBusesResponse& r) {
-  // Реализуйте эту функцию
+  for (const auto& line : r.res) {
+    os << line << endl;
+  }
   return os;
 }
 
@@ -124,16 +126,17 @@ class BusManager {
 
   StopsForBusResponse GetStopsForBus(const string& bus) const {
     StopsForBusResponse r = {};
+    r.res = vector<string>();
     if (buses_to_stops.count(bus) == 0) {
       r.res.push_back("No bus");
     } else {
-      for (const string& stop : buses_to_stops[bus]) {
+      for (const string& stop : buses_to_stops.at(bus)) {
         string current = "";
-        current += "Stop " + ": ";
-        if (stops_to_buses[stop].size() == 1) {
+        current += "Stop : ";
+        if (stops_to_buses.at(stop).size() == 1) {
           current += "no interchange";
         } else {
-          for (const string& other_bus : stops_to_buses[stop]) {
+          for (const string& other_bus : stops_to_buses.at(stop)) {
             if (bus != other_bus) {
               current += other_bus + " ";
             }
@@ -146,7 +149,20 @@ class BusManager {
   }
 
   AllBusesResponse GetAllBuses() const {
-    // Реализуйте этот метод
+    AllBusesResponse r = {};
+    r.res = vector<string>();
+    if (buses_to_stops.empty()) {
+      r.res.push_back("No buses");
+    } else {
+      string current = "";
+      for (const auto& bus_item : buses_to_stops) {
+        current += "Bus " + bus_item.first + ": ";
+        for (const string& stop : bus_item.second) {
+          current += stop + " ";
+        }
+        r.res.push_back(current);
+      }
+    }
   }
  private:
   Mapping buses_to_stops, stops_to_buses;
