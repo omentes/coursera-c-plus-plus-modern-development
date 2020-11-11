@@ -5,7 +5,7 @@
 #include <map>
 
 using namespace std;
-using Mapping = map<string, vector<string>>;
+//using Mapping = map<string, vector<string>>;
 enum class QueryType {
   NewBus,
   BusesForStop,
@@ -87,11 +87,16 @@ ostream& operator << (ostream& os, const AllBusesResponse& r) {
 class BusManager {
  public:
   void AddBus(const string& bus, const vector<string>& stops) {
-    vector<string>& _st = buses_to_stops[bus];
-    _st.resize(stops.size());
-    for (const auto& stop : stops) {
+    buses_to_stops[bus] = stops;
+    for (const auto& stop : buses_to_stops[bus]) {
       stops_to_buses[stop].push_back(bus);
     }
+
+    cout << "\n";
+    cout << "\n";
+    cout << vector<string>({"string", "str"});
+    cout << "\n";
+    cout << "\n";
   }
 
   BusesForStopResponse GetBusesForStop(const string& stop) const {
@@ -148,7 +153,8 @@ class BusManager {
     return r;
   }
  private:
-  Mapping buses_to_stops, stops_to_buses;
+  map<string, vector<string>> buses_to_stops;
+  map<string, vector<string>> stops_to_buses;
 
 };
 
