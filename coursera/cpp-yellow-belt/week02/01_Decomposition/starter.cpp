@@ -1,11 +1,12 @@
 #include <string>
 #include <iostream>
 #include <cassert>
+#include <utility>
 #include <vector>
 #include <map>
 
 using namespace std;
-//using Mapping = map<string, vector<string>>;
+using Mapping = map<string, vector<string>>;
 enum class QueryType {
   NewBus,
   BusesForStop,
@@ -31,14 +32,14 @@ istream& operator >> (istream& is, Query& q) {
     vector<string>& stops = q.stops;
     stops.resize(stop_count);
     for (string& stop : stops) {
-      cin >> stop;
-      stops.push_back(q.bus);
+      is >> stop;
     }
   } else if (operation_code == "BUSES_FOR_STOP") {
     q.type = QueryType::BusesForStop;
-    cin >> q.stop;
+    is >> q.stop;
   } else if (operation_code == "STOPS_FOR_BUS") {
     q.type = QueryType::StopsForBus;
+    is >> q.bus;
   } else if (operation_code == "ALL_BUSES") {
     q.type = QueryType::AllBuses;
   }
@@ -63,22 +64,22 @@ ostream& operator << (ostream& os, const BusesForStopResponse& r) {
 }
 
 struct StopsForBusResponse {
-  vector<string> res = {};
+  vector<string> stopsForBus = {};
 };
 
 ostream& operator << (ostream& os, const StopsForBusResponse& r) {
-  for (const auto& line : r.res) {
+  for (const auto& line : r.stopsForBus) {
     os << line << endl;
   }
   return os;
 }
 
 struct AllBusesResponse {
-  vector<string> res = {};
+  vector<string> allBuses = {};
 };
 
 ostream& operator << (ostream& os, const AllBusesResponse& r) {
-  for (const auto& line : r.res) {
+  for (const auto& line : r.allBuses) {
     os << line << endl;
   }
   return os;
@@ -86,17 +87,24 @@ ostream& operator << (ostream& os, const AllBusesResponse& r) {
 
 class BusManager {
  public:
+  BusManager() {
+    buses_to_stops = {};
+    stops_to_buses = {};
+  }
+  BusManager(Mapping buses, Mapping stops) {
+    buses_to_stops = std::move(buses);
+    stops_to_buses = std::move(stops);
+  }
+  Mapping buses_to_stops;
+  Mapping stops_to_buses;
+
   void AddBus(const string& bus, const vector<string>& stops) {
-    buses_to_stops[bus] = stops;
-    for (const auto& stop : buses_to_stops[bus]) {
+    vector<string> saveStops;
+    for (const auto& stop : stops) {
+      saveStops.push_back(stop);
       stops_to_buses[stop].push_back(bus);
     }
-
-    cout << "\n";
-    cout << "\n";
-    cout << vector<string>({"string", "str"});
-    cout << "\n";
-    cout << "\n";
+    buses_to_stops[bus] = saveStops;
   }
 
   BusesForStopResponse GetBusesForStop(const string& stop) const {
@@ -113,23 +121,27 @@ class BusManager {
 
   StopsForBusResponse GetStopsForBus(const string& bus) const {
     StopsForBusResponse r = {};
-    r.res = vector<string>();
+    r.stopsForBus = vector<string>();
     if (buses_to_stops.count(bus) == 0) {
-      r.res.push_back("No bus");
+      r.stopsForBus.push_back("No bus");
     } else {
       for (const string& stop : buses_to_stops.at(bus)) {
-        string current = "";
-        current += "Stop : ";
+        string current = "Stop " + stop + ": ";
         if (stops_to_buses.at(stop).size() == 1) {
           current += "no interchange";
         } else {
+          bool trailingSpace = false;
           for (const string& other_bus : stops_to_buses.at(stop)) {
             if (bus != other_bus) {
-              current += other_bus + " ";
+              if (trailingSpace) {
+                current += " ";
+              }
+              trailingSpace = true;
+              current += other_bus;
             }
           }
         }
-        r.res.push_back(current);
+        r.stopsForBus.push_back(current);
       }
     }
     return r;
@@ -137,25 +149,26 @@ class BusManager {
 
   AllBusesResponse GetAllBuses() const {
     AllBusesResponse r = {};
-    r.res = vector<string>();
+    r.allBuses = vector<string>();
     if (buses_to_stops.empty()) {
-      r.res.push_back("No buses");
+      r.allBuses.push_back("No buses");
     } else {
-      string current = "";
       for (const auto& bus_item : buses_to_stops) {
+        string current;
         current += "Bus " + bus_item.first + ": ";
+        bool trailingSpace = false;
         for (const string& stop : bus_item.second) {
-          current += stop + " ";
+          if (trailingSpace) {
+            current += " ";
+          }
+          trailingSpace = true;
+          current += stop;
         }
-        r.res.push_back(current);
+        r.allBuses.push_back(current);
       }
     }
     return r;
   }
- private:
-  map<string, vector<string>> buses_to_stops;
-  map<string, vector<string>> stops_to_buses;
-
 };
 
 // Не меняя тела функции main, реализуйте функции и классы выше
@@ -187,4 +200,3 @@ int main() {
 
   return 0;
 }
-
