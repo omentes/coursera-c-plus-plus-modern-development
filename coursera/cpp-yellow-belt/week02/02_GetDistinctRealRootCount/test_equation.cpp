@@ -5,8 +5,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
-#include <cmath>
-//#include "reload.h"
+
 using namespace std;
 
 template <class T>
@@ -57,7 +56,7 @@ void AssertEqual(const T& t, const U& u, const string& hint = {}) {
     ostringstream os;
     os << "Assertion failed: " << t << " != " << u;
     if (!hint.empty()) {
-      os << " hint: " << hint;
+       os << " hint: " << hint;
     }
     throw runtime_error(os.str());
   }
@@ -68,7 +67,7 @@ void Assert(bool b, const string& hint) {
 }
 
 class TestRunner {
- public:
+public:
   template <class TestFunc>
   void RunTest(TestFunc func, const string& test_name) {
     try {
@@ -90,28 +89,14 @@ class TestRunner {
     }
   }
 
- private:
+private:
   int fail_count = 0;
 };
 
 int GetDistinctRealRootCount(double a, double b, double c) {
-  vector<double> result;
-  double d, scrt_result;
-  d = (b * b) - 4 * a * c;
-  scrt_result = sqrt(d);
-  if (d < 0.0) {
-    return 0;
-  }
-  if (0 == a && b != 0) {
-    result.push_back((double)(-c / b));
-  } else if (d > 0 && a != 0) {
-    result.push_back((double)((-b + scrt_result) / (2 * a)));
-    result.push_back((double)((-b - scrt_result) / (2 * a)));
-  } else if (a != 0) {
-    result.push_back(-b / (2 * a));
-  }
-
-  return result.size();
+  // Вы можете вставлять сюда различные реализации функции,
+  // чтобы проверить, что ваши тесты пропускают корректный код
+  // и ловят некорректный
 }
 
 void TestExp1() {
@@ -155,6 +140,8 @@ void TestExp6() {
  * 0 1 1  =1
  * 2 4 0  =2
  * 0 4 10  =1
+ * 0 4 0  =2
+ * -1 -1 -1  =0
  *
  * * * * * * * * * */
 
