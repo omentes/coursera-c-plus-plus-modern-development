@@ -5,8 +5,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
-#include <cmath>
-//#include "reload.h"
+
 using namespace std;
 
 template <class T>
@@ -94,69 +93,134 @@ class TestRunner {
   int fail_count = 0;
 };
 
-int GetDistinctRealRootCount(double a, double b, double c) {
-  vector<double> result;
-  double d, scrt_result;
-  d = (b * b) - 4 * a * c;
-  scrt_result = sqrt(d);
-  if (d < 0.0) {
-    return 0;
+class Person {
+ public:
+  void ChangeFirstName(int year, const string& first_name) {
+    date_to_first_name[year] = first_name;
   }
-  if (0 == a && b != 0) {
-    result.push_back((double)(-c / b));
-  } else if (d > 0 && a != 0) {
-    result.push_back((double)((-b + scrt_result) / (2 * a)));
-    result.push_back((double)((-b - scrt_result) / (2 * a)));
-  } else if (a != 0) {
-    result.push_back(-b / (2 * a));
+  void ChangeLastName(int year, const string& last_name) {
+    date_to_last_name[year] = last_name;
+  }
+  string GetFullName(int year) {
+    string first = getName(year, date_to_first_name);
+    string last = getName(year, date_to_last_name);
+    if (last == "unknown" || first == "unknown") {
+      if (last == first) {
+        return "Incognito";
+      }
+      return (last == "unknown") ? first + " with unknown last name" : last + " with unknown first name";
+    }
+    return first + " " + last;
   }
 
-  return result.size();
-}
+ private:
+  map <int, string> date_to_first_name;
+  map <int, string> date_to_last_name;
+
+  string getName(int year, map <int, string>& store) {
+    string result = "unknown";
+    for (const auto& [current, first_name] : store) {
+      if (current > year) {
+        break;
+      } else if (current == year) {
+        result = first_name;
+        break ;
+      }
+      result = first_name;
+    }
+    return result;
+  }
+};
 
 void TestExp1() {
-  if (0 != GetDistinctRealRootCount(0, 0, 1)) {
-    throw runtime_error("TestExp1");
+  Person person;
+  string result = person.GetFullName(1);
+  if ("Incognito" != result) {
+    throw runtime_error("TestExp1: " +  result);
   }
 }
 
 void TestExp2() {
-  if (1 != GetDistinctRealRootCount(0, 1, 1)) {
-    throw runtime_error("TestExp2");
+  Person person;
+  person.ChangeFirstName(1965, "Polina");
+  string result = person.GetFullName(1);
+  if ("Incognito" != result) {
+    throw runtime_error("TestExp2: " +  result);
   }
 }
 
 void TestExp3() {
-  if (2 != GetDistinctRealRootCount(2, 4, 0)) {
-    throw runtime_error("TestExp3");
+  Person person;
+  person.ChangeFirstName(1965, "Polina");
+  string result = person.GetFullName(1965);
+  if ("Polina with unknown last name" != result) {
+    throw runtime_error("TestExp3: " +  result);
   }
 }
 
 void TestExp4() {
-  if (1 != GetDistinctRealRootCount(0, 4, 10)) {
-    throw runtime_error("TestExp4");
+  Person person;
+  person.ChangeLastName(1965, "Sergeeva");
+  string result = person.GetFullName(1965);
+  if ("Sergeeva with unknown first name" != result) {
+    throw runtime_error("TestExp4: " +  result);
   }
 }
 
 void TestExp5() {
-  if (2 != GetDistinctRealRootCount(1, 4, 0)) {
-    throw runtime_error("TestExp5");
+  Person person;
+  person.ChangeFirstName(1965, "Polina");
+  person.ChangeLastName(1967, "Sergeeva");
+  string result = person.GetFullName(1968);
+  if ("Polina Sergeeva" != result) {
+    throw runtime_error("TestExp5: " +  result);
   }
 }
 
 void TestExp6() {
-  if (0 != GetDistinctRealRootCount(-1, -1, -1)) {
-    throw runtime_error("TestExp6");
+  Person person;
+  person.ChangeFirstName(1967, "Polina");
+  person.ChangeLastName(1965, "Sergeeva");
+  string result = person.GetFullName(1965);
+  if ("Sergeeva with unknown first name" != result) {
+    throw runtime_error("TestExp6: " +  result);
   }
 }
 
-/*
- * 0 0 1  =0
- * 0 1 1  =1
- * 2 4 0  =2
- * 0 4 10  =1
- *
- * * * * * * * * * */
+void TestExp7() {
+  Person person;
+  person.ChangeLastName(1967, "Polina");
+  person.ChangeLastName(1965, "Sergeeva");
+  string result = person.GetFullName(0);
+  if ("Incognito" != result) {
+    throw runtime_error("TestExp7: " +  result);
+  }
+}
+
+void TestExp8() {
+  Person person;
+  person.ChangeFirstName(1965, "Polina");
+  person.ChangeFirstName(1966, "Polina66");
+  person.ChangeLastName(1965, "Sergeeva");
+  person.ChangeLastName(1967, "Sergeeva67");
+  string result = person.GetFullName(1966);
+  if ("Polina66 Sergeeva" != result) {
+    throw runtime_error("TestExp8: " +  result);
+  }
+}
+
+void TestExp9() {
+  Person person;
+  person.ChangeFirstName(1965, "Polina");
+  person.ChangeFirstName(1966, "Polina66");
+  person.ChangeLastName(1965, "Sergeeva");
+  person.ChangeLastName(1967, "Sergeeva67");
+  string result = person.GetFullName(1967);
+  if ("Polina66 Sergeeva67" != result) {
+    throw runtime_error("TestExp9: " +  result);
+  }
+}
+
 
 int main() {
   TestRunner runner;
@@ -166,5 +230,8 @@ int main() {
   runner.RunTest(TestExp4, "TestExp4");
   runner.RunTest(TestExp5, "TestExp5");
   runner.RunTest(TestExp6, "TestExp6");
+  runner.RunTest(TestExp7, "TestExp7");
+  runner.RunTest(TestExp8, "TestExp8");
+  runner.RunTest(TestExp9, "TestExp9");
   return 0;
 }
