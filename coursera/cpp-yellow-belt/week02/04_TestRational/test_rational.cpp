@@ -56,7 +56,7 @@ void AssertEqual(const T& t, const U& u, const string& hint = {}) {
     ostringstream os;
     os << "Assertion failed: " << t << " != " << u;
     if (!hint.empty()) {
-      os << " hint: " << hint;
+       os << " hint: " << hint;
     }
     throw runtime_error(os.str());
   }
@@ -67,7 +67,7 @@ void Assert(bool b, const string& hint) {
 }
 
 class TestRunner {
- public:
+public:
   template <class TestFunc>
   void RunTest(TestFunc func, const string& test_name) {
     try {
@@ -89,51 +89,9 @@ class TestRunner {
     }
   }
 
- private:
+private:
   int fail_count = 0;
 };
-
-class Rational {
- public:
-  Rational() {
-    a = 0; // числитель Numerator
-    b = 1; // знаменталь Denominator
-  }
-
-  Rational(int numerator, int denominator) {
-    int div = gcd(numerator, denominator);
-    a = numerator/div;
-    b = denominator/div;
-    if (denominator < 0 && numerator < 0 && a < 0 && b < 0) {
-      a = a * -1;
-      b = b * -1;
-    } else if (numerator > 0 && denominator < 0 && a > 0 && b < 0) {
-      a = a * -1;
-      b = b * -1;
-    } else if (numerator == 0 && denominator < 0 && b < 0) {
-      b = b * -1;
-    }
-  }
-
-  int Numerator() const {
-    return a;
-  }
-
-  int Denominator() const {
-    return b;
-  }
-
-  int gcd(int one, int two) {
-    if (one == 0)
-      return two;
-    return gcd(two % one, one);
-  }
-
- private:
-  int a;
-  int b;
-};
-
 
 void TestExp00() {
   Rational num;
