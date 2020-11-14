@@ -56,7 +56,7 @@ void AssertEqual(const T& t, const U& u, const string& hint = {}) {
     ostringstream os;
     os << "Assertion failed: " << t << " != " << u;
     if (!hint.empty()) {
-      os << " hint: " << hint;
+       os << " hint: " << hint;
     }
     throw runtime_error(os.str());
   }
@@ -67,7 +67,7 @@ void Assert(bool b, const string& hint) {
 }
 
 class TestRunner {
- public:
+public:
   template <class TestFunc>
   void RunTest(TestFunc func, const string& test_name) {
     try {
@@ -89,18 +89,71 @@ class TestRunner {
     }
   }
 
- private:
+private:
   int fail_count = 0;
 };
 
-bool IsPalindrom(const string& str) {
-  // Вы можете вставлять сюда различные реализации функции,
-  // чтобы проверить, что ваши тесты пропускают корректный код
-  // и ловят некорректный
+void TestExp00() {
+  Assert(IsPalindrom(""), "TestExp00");
+}
+
+void TestExp01() {
+  Assert(IsPalindrom(" "), "TestExp01");
+}
+
+void TestExp02() {
+  Assert(IsPalindrom("  "), "TestExp02");
+}
+
+void TestExp03() {
+  Assert(IsPalindrom(" . "), "TestExp03");
+}
+
+void TestExp04() {
+  Assert(IsPalindrom(" \n "), "TestExp04");
+}
+
+void TestExp05() {
+  Assert(IsPalindrom(" \t "), "TestExp05");
+}
+
+void TestExp06() {
+  Assert(!IsPalindrom(" a"), "TestExp06");
+}
+
+void TestExp07() {
+  Assert(!IsPalindrom(" abcbba "), "TestExp07");
+}
+
+void TestExp08() {
+  Assert(!IsPalindrom(" abcbba "), "TestExp08");
+}
+
+void TestExp09() {
+  Assert(!IsPalindrom(" abcba"), "TestExp09");
+}
+
+void TestExp10() {
+  Assert(!IsPalindrom(" .!l\t\n \tl!. "), "TestExp10");
+}
+
+void TestExp11() {
+  Assert(!IsPalindrom("\t \v"), "TestExp11");
 }
 
 int main() {
   TestRunner runner;
-  // добавьте сюда свои тесты
+  runner.RunTest(TestExp00, "TestExp00");
+  runner.RunTest(TestExp01, "TestExp01");
+  runner.RunTest(TestExp02, "TestExp02");
+  runner.RunTest(TestExp03, "TestExp03");
+  runner.RunTest(TestExp04, "TestExp04");
+  runner.RunTest(TestExp05, "TestExp05");
+  runner.RunTest(TestExp06, "TestExp06");
+  runner.RunTest(TestExp07, "TestExp07");
+  runner.RunTest(TestExp08, "TestExp08");
+  runner.RunTest(TestExp09, "TestExp09");
+  runner.RunTest(TestExp10, "TestExp10");
+  runner.RunTest(TestExp11, "TestExp11");
   return 0;
 }
