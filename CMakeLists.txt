@@ -7,4 +7,6 @@ add_executable(
         sandbox
         main.cpp
         test_runner.h test_runner.cpp
+        coursera/cpp-yellow-belt/week03/02_phone_number/phone_number.h
+        coursera/cpp-yellow-belt/week03/02_phone_number/phone_number.cpp
 )
