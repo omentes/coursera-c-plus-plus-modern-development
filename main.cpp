@@ -1,41 +1,41 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <set>
 #include "reload.h"
 
 using namespace std;
 
-template <typename RandomIt>
-void MergeSort(RandomIt range_begin, RandomIt range_end) {
-  int len = range_end - range_begin;
-  if (len < 2) {
-    return;
+set<int>::const_iterator FindNearestElement(
+    const set<int>& numbers,
+    int border) {
+  if (numbers.empty()) {
+    return numbers.begin();
   }
-  vector<typename RandomIt::value_type> elements(range_begin, range_end);
-  vector<typename RandomIt::value_type> tmp;
-  int half = len / 3;
-  MergeSort(elements.begin(), elements.begin() + half);
-  MergeSort(elements.begin() + half, elements.begin() + half * 2);
-  MergeSort(elements.begin() + half * 2, elements.begin() + len);
-  merge(
-      elements.begin(), elements.begin() + half,
-      elements.begin() + half, elements.begin() + half * 2,
-      back_inserter(tmp)
-  );
-  merge(
-      elements.begin() + half * 2, elements.begin() + len,
-      tmp.begin(), tmp.end(),
-      range_begin
-  );
+  auto lower = numbers.lower_bound(border);
+  if (*lower == border) {
+    return lower;
+  }
+  auto lower2 = lower_bound(numbers.begin(), prev(lower), border);
+  if (*lower - border >= border - *lower2 || border - *lower > border - *lower2) {
+    return lower2;
+  }
+  return lower;
 }
+// set<int>::const_iterator —
+// тип итераторов для константного множества целых чисел
 
 int main() {
-  vector<int> v = {6, 4, 7, 6, 4, 4, 0, 1, 5};
-//  vector<int> v = {6, 4, 7, 6, 4, 4, 0, 1};
-  MergeSort(begin(v), end(v));
-  for (int x : v) {
-    cout << x << " ";
-  }
-  cout << endl;
+  set<int> numbers = {1, 4, 6};
+  cout <<
+       *FindNearestElement(numbers, 0) << " " << // 1
+       *FindNearestElement(numbers, 3) << " " << // 4
+       *FindNearestElement(numbers, 5) << " " << // 4
+       *FindNearestElement(numbers, 6) << " " << // 6
+       *FindNearestElement(numbers, 100) << endl; // 6
+
+  set<int> empty_set;
+//
+  cout << (FindNearestElement(empty_set, 8) == end(empty_set)) << endl;
   return 0;
 }
