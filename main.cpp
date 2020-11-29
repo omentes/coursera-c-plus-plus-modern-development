@@ -1,41 +1,49 @@
 #include <iostream>
+#include <map>
+#include <set>
+#include <sstream>
+#include <stdexcept>
+#include <string>
 #include <vector>
 #include <algorithm>
-#include <set>
-#include "reload.h"
 
 using namespace std;
 
-set<int>::const_iterator FindNearestElement(
-    const set<int>& numbers,
-    int border) {
-  if (numbers.empty()) {
-    return numbers.begin();
-  }
-  auto lower = numbers.lower_bound(border);
-  if (*lower == border) {
-    return lower;
-  }
-  auto lower2 = lower_bound(numbers.begin(), prev(lower), border);
-  if (*lower - border >= border - *lower2 || border - *lower > border - *lower2) {
-    return lower2;
-  }
-  return lower;
-}
-// set<int>::const_iterator —
-// тип итераторов для константного множества целых чисел
+
+template <typename RandomIt>
+pair<RandomIt, RandomIt> FindStartsWith(
+    RandomIt range_begin, RandomIt range_end,
+    const string& prefix) {
+
+    return equal_range(
+        range_begin,
+        range_end,
+        prefix,
+        [&prefix](const string& lhs, const string& rhs) {
+          return lhs.compare(0, prefix.length(), rhs.substr(0, prefix.length())) < 0;
+        }
+    );
+};
 
 int main() {
-  set<int> numbers = {1, 4, 6};
-  cout <<
-       *FindNearestElement(numbers, 0) << " " << // 1
-       *FindNearestElement(numbers, 3) << " " << // 4
-       *FindNearestElement(numbers, 5) << " " << // 4
-       *FindNearestElement(numbers, 6) << " " << // 6
-       *FindNearestElement(numbers, 100) << endl; // 6
+  const vector<string> sorted_strings = {"moscow", "motovilikha", "murmansk"};
 
-  set<int> empty_set;
-//
-  cout << (FindNearestElement(empty_set, 8) == end(empty_set)) << endl;
+  const auto mo_result =
+      FindStartsWith(begin(sorted_strings), end(sorted_strings), "mo");
+  for (auto it = mo_result.first; it != mo_result.second; ++it) {
+    cout << *it << " ";
+  }
+  cout << endl;
+
+  const auto mt_result =
+      FindStartsWith(begin(sorted_strings), end(sorted_strings), "mt");
+  cout << (mt_result.first - begin(sorted_strings)) << " " <<
+            (mt_result.second - begin(sorted_strings)) << endl;
+
+  const auto na_result =
+      FindStartsWith(begin(sorted_strings), end(sorted_strings), "na");
+  cout << (na_result.first - begin(sorted_strings)) << " " <<
+            (na_result.second - begin(sorted_strings)) << endl;
+
   return 0;
 }
